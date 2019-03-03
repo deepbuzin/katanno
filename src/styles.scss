@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'node_modules/bulma/bulma';
-
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import './grid.css';
 // body {
 //     // position: fixed;
 //     // top: 0;
@@ -11,7 +12,7 @@
 //     color: white;
 // }
 
-// .content { 
+// .content {
 //     color: white;
 //     h1,h2,h3,h4,h5 {
 //         color: white;

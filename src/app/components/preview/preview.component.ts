@@ -12,7 +12,7 @@ export class PreviewComponent implements OnInit {
     private db: DbService;
   constructor() {
       this.fs = new FsService();
-      this.db = new DbService();
+      this.db = DbService.getInstance();
   }
 
   ngOnInit() {

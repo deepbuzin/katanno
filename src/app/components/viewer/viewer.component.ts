@@ -14,7 +14,7 @@ export class ViewerComponent implements OnInit {
 
     constructor() {
         this.fs = new FsService();
-        this.db = new DbService();
+        this.db = DbService.getInstance();
     }
 
     ngOnInit() {

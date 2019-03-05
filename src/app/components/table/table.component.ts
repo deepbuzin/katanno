@@ -21,7 +21,7 @@ export class TableComponent implements OnInit {
 
     constructor() {
         this.fs = new FsService();
-        this.db = new DbService();
+        this.db = DbService.getInstance();
     }
 
     chooseDataset(activeDataset) {

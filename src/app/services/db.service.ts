@@ -23,6 +23,21 @@ export class DbService {
     }
 
     public fetchByCategory(cat): Array<Object> {
-        return this.db.find({category: cat})
+        // return this.db.find({category: cat})
+        // Mock V
+        return [
+            {
+                category: cat,
+                path: 'C:\\',
+                name: 'Porn',
+                id: 'id1234'
+            },
+            {
+                category: cat,
+                path: 'C:\\porn',
+                name: 'Not porn',
+                id: 'id1235'
+            }
+        ];
     }
 }

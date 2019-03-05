@@ -10,6 +10,7 @@ import { DbService } from '../../services/db.service';
 export class ViewerComponent implements OnInit {
     private fs: FsService;
     private db: DbService;
+    public directories;
 
     constructor() {
         this.fs = new FsService();
@@ -21,6 +22,16 @@ export class ViewerComponent implements OnInit {
 
     onClickNew() {
         const path = this.fs.selectDirDialog();
-        this.db.insert({category: 'folder', path: path})
+        this.db.insert({category: 'folder', path: path});
+        this.getDatasets();
+        console.log(this.directories);
+    }
+
+    getDatasets () {
+        this.directories = this.db.fetchByCategory('folder');
+    }
+
+    logActiveDS (event) {
+        console.warn('received dataset id', event);
     }
 }

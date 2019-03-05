@@ -6,7 +6,11 @@
     </div>
     <div class="row viewer-container">
         <div class="col-md-3">
-            <app-table></app-table>
+            <app-table
+                [entries]="directories"
+                (activeDatasetId)="logActiveDS($event)">
+
+            </app-table>
         </div>
         <div class="col-md-9">
             <app-preview></app-preview>

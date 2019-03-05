@@ -1,4 +1,15 @@
-<ul *ngFor="let entry of entries">
-    <!--<li><a (click)="changeDir(entry)">{{entry}}</a></li>-->
-    <li><a>{{entry}}</a></li>
-</ul>
+<div class="list-group">
+    <!--<a *ngFor="let entry of _entries"-->
+       <!--(click)="chooseDataset(entry)"-->
+       <!--class="list-group-item list-group-item-action"-->
+       <!--[class]="activeSet === entry.id ? 'active' : 0">-->
+        <!--{{entry.name}}-->
+    <!--</a>-->
+    <button type="button"
+            *ngFor="let entry of _entries"
+            (click)="chooseDataset(entry)"
+            class="list-group-item list-group-item-action"
+            [class.active]="activeSet === entry.id">
+        {{entry.name}}
+    </button>
+</div>

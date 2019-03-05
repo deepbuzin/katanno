@@ -5,15 +5,14 @@ import {shell} from 'electron';
 const { dialog } = require('electron').remote;
 
 @Injectable()
-export class FSService {
+export class FsService {
     private currentPath: string = process.cwd();
 
     constructor() {
     }
 
-    public openDialog(): void {
-        console.log('DIALOG', dialog);
-        console.log(dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }));
+    public selectDirDialog(): string {
+        return dialog.showOpenDialog({ properties: ['openDirectory'] })[0];
     }
 
     public listDir(): Array<string> {

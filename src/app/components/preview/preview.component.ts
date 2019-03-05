@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FSService} from '../../services/fs.service';
+import { FsService } from '../../services/fs.service';
+import { DbService } from '../../services/db.service';
 
 @Component({
   selector: 'app-preview',
@@ -7,13 +8,16 @@ import {FSService} from '../../services/fs.service';
   styleUrls: ['./preview.component.scss']
 })
 export class PreviewComponent implements OnInit {
-    private fs: FSService;
+    private fs: FsService;
+    private db: DbService;
   constructor() {
-      this.fs = new FSService();
+      this.fs = new FsService();
+      this.db = new DbService();
   }
 
   ngOnInit() {
-      this.fs.openDialog();
+      // this.fs.openDialog();
+      // this.db.useDb();
   }
 
 }

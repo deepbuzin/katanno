@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { FilesystemService } from './fs.service';
+import { FsService } from './fs.service';
 
 describe('FilesystemService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FilesystemService]
+      providers: [FsService]
     });
   });
 
-  it('should ...', inject([FilesystemService], (service: FilesystemService) => {
+  it('should ...', inject([FsService], (service: FsService) => {
     expect(service).toBeTruthy();
   }));
 });

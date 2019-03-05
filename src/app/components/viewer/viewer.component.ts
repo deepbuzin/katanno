@@ -21,6 +21,8 @@ export class ViewerComponent implements OnInit {
     }
 
     onClickNew() {
+        // TODO
+        // Юзать здесь либу для сплиттинга
         const path = this.fs.selectDirDialog();
         const patharr = path.split('\\');
         const name = patharr[patharr.length - 1];

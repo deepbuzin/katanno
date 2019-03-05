@@ -15,13 +15,13 @@ export class DbService {
         return this._instance || (this._instance = new this());
     }
 
-    public insert(obj): void {
+    public insert(obj: object): void {
         this.db.insert(obj, (err, newDoc) => {
             console.log(err, newDoc);
         });
     }
 
-    public fetchByCategory(cat): Promise<Array<string>> {
+    public fetchByCategory(cat: string): Promise<Array<object>> {
         return new Promise((resolve, reject) => {
             this.db.find({category: cat}, (err, doc) => {
                 if (err) reject(err);

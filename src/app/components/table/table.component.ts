@@ -10,7 +10,7 @@ import { DbService } from '../../services/db.service';
 export class TableComponent implements OnInit {
     private fs: FsService;
     private db: DbService;
-    private _entries: Array<string>;
+    private _entries: Array<any>;
     private activeSet: string;
 
     @Input()
@@ -25,11 +25,13 @@ export class TableComponent implements OnInit {
     }
 
     chooseDataset(activeDataset) {
-        this.activeSet = activeDataset.id;
-        this.activeDatasetId.emit(activeDataset.id);
+        this.activeSet = activeDataset._id;
+        this.activeDatasetId.emit(activeDataset._id);
     }
 
     ngOnInit() {
+        // this.entries = this.fs.listDir();
+        this.activeSet = this._entries[0]._id;
         console.log(this._entries);
     }
 }

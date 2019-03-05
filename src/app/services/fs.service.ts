@@ -7,8 +7,13 @@ const { dialog } = require('electron').remote;
 @Injectable()
 export class FsService {
     private currentPath: string = process.cwd();
+    private static _instance: FsService;
 
-    constructor() {
+    private constructor() {
+    }
+
+    public static get instance(): FsService {
+        return this._instance || (this._instance = new this());
     }
 
     public selectDirDialog(): string {

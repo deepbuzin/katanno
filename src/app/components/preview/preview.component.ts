@@ -11,13 +11,11 @@ export class PreviewComponent implements OnInit {
     private fs: FsService;
     private db: DbService;
   constructor() {
-      this.fs = new FsService();
-      this.db = DbService.getInstance();
+      this.fs = FsService.instance;
+      this.db = DbService.instance;
   }
 
   ngOnInit() {
-      // this.fs.openDialog();
-      // this.db.useDb();
   }
 
 }

@@ -5,21 +5,14 @@ const Datastore = require('nedb');
 @Injectable()
 export class DbService {
     private db;
-    private static instance: DbService = new DbService();
+    private static _instance: DbService;
 
     private constructor() {
-        this.db = new Datastore({filename: join(process.cwd(), 'datasets')});
-        this.db.loadDatabase(err => console.log(err));
+        this.db = new Datastore({filename: join(process.cwd(), 'datasets'), autoload: true});
     }
 
-    public static getInstance(): DbService {
-        return this.instance || (this.instance = new this());
-    }
-
-    public useDb(): void {
-        this.db.insert({kek: 'pek'}, (err, newDoc) => {
-            console.log(err, newDoc);
-        });
+    public static get instance(): DbService {
+        return this._instance || (this._instance = new this());
     }
 
     public insert(obj): void {
@@ -35,24 +28,5 @@ export class DbService {
                 resolve(doc);
             });
         });
-    }
-
-    public fetchByCategoryStub(cat): Array<Object> {
-        // return this.db.find({category: cat})
-        // Mock V
-        return [
-            {
-                category: cat,
-                path: 'C:\\',
-                name: 'Porn',
-                id: 'id1234'
-            },
-            {
-                category: cat,
-                path: 'C:\\porn',
-                name: 'Not porn',
-                id: 'id1235'
-            }
-        ];
     }
 }

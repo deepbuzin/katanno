@@ -20,8 +20,8 @@ export class TableComponent implements OnInit {
     @Output() activeDatasetId = new EventEmitter<string>();
 
     constructor() {
-        this.fs = new FsService();
-        this.db = DbService.getInstance();
+        this.fs = FsService.instance;
+        this.db = DbService.instance;
     }
 
     chooseDataset(activeDataset) {
@@ -30,7 +30,6 @@ export class TableComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.entries = this.fs.listDir();
         console.log(this._entries);
     }
 }

@@ -13,8 +13,8 @@ export class ViewerComponent implements OnInit {
     public directories;
 
     constructor() {
-        this.fs = new FsService();
-        this.db = DbService.getInstance();
+        this.fs = FsService.instance;
+        this.db = DbService.instance;
     }
 
     ngOnInit() {

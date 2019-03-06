@@ -51,9 +51,9 @@ export class DbService {
         });
     }
 
-    public fetchAllByCat(cat: string): Promise<Array<any>> {
+    public fetchAllByType(type: string): Promise<Array<any>> {
         return new Promise((resolve, reject) => {
-            this.db.find({cat: cat}, (err, docs) => {
+            this.db.find({type: type}, (err, docs) => {
                 if (err) reject(err);
                 resolve(docs);
             });

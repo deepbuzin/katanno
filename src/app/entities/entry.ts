@@ -41,7 +41,7 @@ export class Entry implements DbEntity {
     serialize(): object {
         return {
             _id: this.id,
-            cat: 'Entry',
+            type: 'Entry',
             filename: this.filename,
             annotations: this.annotations.map(a => a.serialize())
         };

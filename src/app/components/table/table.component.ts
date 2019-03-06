@@ -15,7 +15,7 @@ export class TableComponent implements OnInit {
 
     @Input()
     set entries(entries: Array<string>) {
-        this._entries = entries || this.db.fetchAllByCat('folder')['path'];
+        this._entries = entries || this.db.fetchAllByType('folder')['path'];
     }
     @Output() activeDatasetId = new EventEmitter<string>();
 

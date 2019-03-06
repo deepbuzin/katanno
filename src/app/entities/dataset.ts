@@ -62,7 +62,7 @@ export class Dataset implements DbEntity {
     serialize(): object {
         return {
             _id: this.id,
-            cat: 'Dataset',
+            type: 'Dataset',
             name: this.name,
             path: this.path,
             description: this.description,

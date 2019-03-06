@@ -32,7 +32,7 @@ export class ViewerComponent implements OnInit {
     }
 
     async getDatasets () {
-        this.directories = await this.db.fetchAllByCat('folder');
+        this.directories = await this.db.fetchAllByType('folder');
     }
 
     logActiveDS (event) {

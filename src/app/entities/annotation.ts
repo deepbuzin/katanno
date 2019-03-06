@@ -6,11 +6,14 @@ export class Annotation implements DbEntity {
     private _mask: any;
     private _caption: any;
 
-    deserialize<Annotation>(object: any): Annotation {
-        return undefined;
+    deserialize(object: any): Annotation {
+        return this;
     }
 
     serialize(): object {
-        return undefined;
+        return {
+            _id: this._id,
+            cat: 'Annotation'
+        };
     }
 }

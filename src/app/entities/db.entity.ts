@@ -1,4 +1,4 @@
 export interface DbEntity {
     serialize(): object;
-    deserialize<T extends DbEntity>(object: any): T;
+    deserialize(object: any): DbEntity;
 }

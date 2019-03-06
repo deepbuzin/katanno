@@ -8,5 +8,12 @@ export class Cat implements DbEntity {
     private _hasMask: boolean;
     private _hasCaption: boolean;
 
+    deserialize(object: any): DbEntity {
+        return undefined;
+    }
+
+    serialize(): any {
+    }
+
 
 }

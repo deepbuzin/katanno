@@ -26,13 +26,13 @@ export class ViewerComponent implements OnInit {
         const path = this.fs.selectDirDialog();
         const patharr = path.split('\\');
         const name = patharr[patharr.length - 1];
-        this.db.insert({category: 'folder', path: path, name: name});
+        this.db.insertOne({cat: 'folder', path: path, name: name});
         this.getDatasets();
         console.log(this.directories);
     }
 
     async getDatasets () {
-        this.directories = await this.db.fetchByCategory('folder');
+        this.directories = await this.db.fetchAllByCat('folder');
     }
 
     logActiveDS (event) {

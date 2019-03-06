@@ -1,8 +1,10 @@
-class Entry implements DbEntity {
+import {DbEntity} from './db.entity';
+
+export class Entry implements DbEntity {
     private _id: string;
     private _filename: string;
 
-    deserialize<Entry>(object: object): Entry {
+    deserialize<Entry>(object: any): Entry {
         return undefined;
     }
 

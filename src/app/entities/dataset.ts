@@ -1,8 +1,14 @@
-class Dataset implements DbEntity {
+import {DbEntity} from './db.entity';
+
+export class Dataset implements DbEntity {
     private _id: string;
     private _name: string;
+    private _path: string;
     private _description: string;
     private _entryIds: Array<string>;
+
+    constructor() {
+    }
 
     get id(): string {
         return this._id;
@@ -18,6 +24,14 @@ class Dataset implements DbEntity {
 
     set name(value: string) {
         this._name = value;
+    }
+
+    get path(): string {
+        return this._path;
+    }
+
+    set path(value: string) {
+        this._path = value;
     }
 
     get description(): string {
@@ -36,16 +50,22 @@ class Dataset implements DbEntity {
         this._entryIds = value;
     }
 
-    deserialize<Dataset>(object: object): Dataset {
-        return undefined;
+    deserialize(object: any): Dataset {
+        this.id = object._id;
+        this.name = object.name;
+        this.path = object.path;
+        this.description = object.description;
+        this.entryIds = object.entryIds;
+        return this;
     }
 
     serialize(): object {
         return {
-            _id: this._id,
-            name: this._name,
-            description: this._description,
-            entryIds: this._entryIds
+            _id: this.id,
+            name: this.name,
+            path: this.path,
+            description: this.description,
+            entryIds: this.entryIds
         };
     }
 

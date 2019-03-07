@@ -11,12 +11,11 @@ import { Dataset } from '../../entities/dataset';
 export class TableComponent implements OnInit {
     private fs: FsService;
     private db: DbService;
-    private _entries: Array<any>;
+    private _entries: Array<Dataset>;
     private activeSet: string;
-    public datasets: Array<Dataset>;
 
     @Input()
-    set entries(entries: Array<string>) {
+    set entries(entries: Array<Dataset>) {
         this._entries = entries || [];
     }
     @Output() activeDatasetId = new EventEmitter<string>();
@@ -24,7 +23,6 @@ export class TableComponent implements OnInit {
     constructor() {
         this.fs = FsService.instance;
         this.db = DbService.instance;
-        this.datasets = [];
     }
 
     chooseDataset(activeDataset) {
@@ -33,6 +31,6 @@ export class TableComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.activeSet = (this._entries && this._entries[0]) ? this._entries[0]._id : undefined;
+        this.activeSet = (this._entries && this._entries[0]) ? this._entries[0].id : undefined;
     }
 }

@@ -9,7 +9,7 @@
             *ngFor="let entry of _entries"
             (click)="chooseDataset(entry)"
             class="list-group-item list-group-item-action"
-            [class.active]="activeSet === entry._id">
+            [class.active]="activeSet === entry.id">
         {{entry.name}}
     </button>
 </div>

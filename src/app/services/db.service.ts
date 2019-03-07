@@ -61,9 +61,10 @@ export class DbService {
     }
 
     public updateFieldsById(id: string, update: any): Promise<any> {
-        return new Promise((resolve) => {
-            this.db.update({ _id: id }, { update }, {  }, () => {
-                resolve();
+        return new Promise((resolve, reject) => {
+            this.db.update({ _id: id }, { $set: update }, { returnUpdatedDocs: true, multi: false }, (err, numAffected, docs) => {
+                if (err) reject(err);
+                resolve(docs);
             });
         });
     }

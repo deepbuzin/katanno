@@ -15,6 +15,7 @@ export class ViewerComponent implements OnInit {
     private fs: FsService;
     private db: DbService;
     public datasets: Array<Dataset>;
+    public entries: Array<Entry>;
 
     constructor() {
         this.fs = FsService.instance;
@@ -37,7 +38,7 @@ export class ViewerComponent implements OnInit {
             // entryIds: e.map(entry => entry['_id']),
             entryIds: [],
         }).serialize()).then(ds => {
-            this.datasets.push(ds);
+            this.datasets.push(new Dataset().deserialize(ds));
             const entries = this.fs.listDir(dir).map(filename => Entry.create({
                 filename: filename,
                 annotations: [],

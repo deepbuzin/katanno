@@ -20,7 +20,7 @@ export class FsService {
         return dialog.showOpenDialog({ properties: ['openDirectory'] })[0];
     }
 
-    public listDir(): Array<string> {
-        return readdirSync(this.currentPath);
+    public listDir(dir: string): Array<string> {
+        return readdirSync(dir);
     }
 }

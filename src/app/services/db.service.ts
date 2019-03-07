@@ -59,4 +59,12 @@ export class DbService {
             });
         });
     }
+
+    public updateFieldsById(id: string, update: any): Promise<any> {
+        return new Promise((resolve) => {
+            this.db.update({ _id: id }, { update }, {  }, () => {
+                resolve();
+            });
+        });
+    }
 }

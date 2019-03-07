@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FsService} from '../../services/fs.service';
+import { FsService } from '../../services/fs.service';
 import { DbService } from '../../services/db.service';
+import { Dataset } from '../../entities/dataset';
+import { Entry } from '../../entities/entry';
+
+const path = require('path');
 
 @Component({
     selector: 'app-viewer',
@@ -10,29 +14,46 @@ import { DbService } from '../../services/db.service';
 export class ViewerComponent implements OnInit {
     private fs: FsService;
     private db: DbService;
-    public directories;
+    public datasets: Array<Dataset>;
 
     constructor() {
         this.fs = FsService.instance;
         this.db = DbService.instance;
+        this.datasets = [];
     }
 
     ngOnInit() {
+        this.fetchDatasets();
     }
 
     onClickNew() {
-        // TODO
-        // Юзать здесь либу для сплиттинга
-        const path = this.fs.selectDirDialog();
-        const patharr = path.split('\\');
-        const name = patharr[patharr.length - 1];
-        this.db.insertOne({cat: 'folder', path: path, name: name});
-        this.getDatasets();
-        console.log(this.directories);
+        const dir = this.fs.selectDirDialog();
+        const datasetName = path.basename(dir);
+
+        this.db.insertOne(Dataset.create({
+            name: datasetName,
+            path: dir,
+            description: 'sample',
+            // entryIds: e.map(entry => entry['_id']),
+            entryIds: [],
+        }).serialize()).then(ds => {
+            this.datasets.push(ds);
+            const entries = this.fs.listDir(dir).map(filename => Entry.create({
+                filename: filename,
+                annotations: [],
+                datasetName: datasetName,
+                datasetId: ds['_id']
+            }));
+
+            this.db.insertMany(entries).then(es => {
+                this.db.updateFieldsById(ds['_id'], { entryIds: es.map(e => e['_id']) })
+            });
+        });
     }
 
-    async getDatasets () {
-        this.directories = await this.db.fetchAllByType('folder');
+    async fetchDatasets(): Promise<void> {
+        const datasets = this.db.fetchAllByType('Dataset');
+        this.datasets = await datasets;
     }
 
     logActiveDS (event) {

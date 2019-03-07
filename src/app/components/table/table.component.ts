@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FsService } from '../../services/fs.service';
 import { DbService } from '../../services/db.service';
+import { Dataset } from '../../entities/dataset';
 
 @Component({
     selector: 'app-table',
@@ -12,16 +13,18 @@ export class TableComponent implements OnInit {
     private db: DbService;
     private _entries: Array<any>;
     private activeSet: string;
+    public datasets: Array<Dataset>;
 
     @Input()
     set entries(entries: Array<string>) {
-        this._entries = entries || this.db.fetchAllByType('folder')['path'];
+        this._entries = entries || [];
     }
     @Output() activeDatasetId = new EventEmitter<string>();
 
     constructor() {
         this.fs = FsService.instance;
         this.db = DbService.instance;
+        this.datasets = [];
     }
 
     chooseDataset(activeDataset) {
@@ -30,8 +33,6 @@ export class TableComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.entries = this.fs.listDir();
-        this.activeSet = this._entries[0]._id;
-        console.log(this._entries);
+        this.activeSet = (this._entries && this._entries[0]) ? this._entries[0]._id : undefined;
     }
 }

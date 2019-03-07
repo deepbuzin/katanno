@@ -10,6 +10,10 @@ export class Dataset implements DbEntity {
     constructor() {
     }
 
+    static create(props): Dataset {
+        return new this().deserialize(props);
+    }
+
     get id(): string {
         return this._id;
     }
@@ -59,15 +63,16 @@ export class Dataset implements DbEntity {
         return this;
     }
 
-    serialize(): object {
-        return {
-            _id: this.id,
+    serialize(): any {
+        const obj = {
             type: 'Dataset',
             name: this.name,
             path: this.path,
             description: this.description,
             entryIds: this.entryIds
         };
+        if (this.id) obj['_id'] = this.id;
+        return obj;
     }
 
 }

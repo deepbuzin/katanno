@@ -16,6 +16,7 @@ export class ViewerComponent implements OnInit {
     private db: DbService;
     public datasets: Array<Dataset>;
     public entries: Array<Entry>;
+    private noEntries = false;
 
     constructor() {
         this.fs = FsService.instance;
@@ -55,6 +56,7 @@ export class ViewerComponent implements OnInit {
     async fetchDatasets(): Promise<void> {
         const datasets = this.db.fetchAllByType('Dataset');
         this.datasets = await datasets;
+        this.noEntries = !this.datasets;
     }
 
     logActiveDS (event) {

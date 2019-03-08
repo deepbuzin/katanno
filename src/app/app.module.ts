@@ -12,7 +12,7 @@ import {ViewerComponent} from './components/viewer/viewer.component';
 import {TableComponent} from './components/table/table.component';
 import {PreviewComponent} from './components/preview/preview.component';
 
-const appRoutes: Routes = [
+const routes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'editor/:id', component: EditorComponent},
     {path: 'viewer', component: ViewerComponent},
@@ -38,9 +38,7 @@ const appRoutes: Routes = [
         BrowserModule,
         FormsModule,
         HttpModule,
-        RouterModule.forRoot(
-            appRoutes,
-        )
+        RouterModule.forRoot(routes, { useHash: true }) // add :{ useHash: true }
     ],
     providers: [],
     bootstrap: [AppComponent]

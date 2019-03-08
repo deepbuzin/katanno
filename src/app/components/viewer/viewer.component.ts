@@ -36,7 +36,6 @@ export class ViewerComponent implements OnInit {
             name: datasetName,
             path: dir,
             description: 'sample',
-            // entryIds: e.map(entry => entry['_id']),
             entryIds: [],
         }).serialize()).then(ds => {
             this.datasets.push(new Dataset().deserialize(ds));
@@ -48,7 +47,11 @@ export class ViewerComponent implements OnInit {
             }));
 
             this.db.insertMany(entries).then(es => {
-                this.db.updateFieldsById(ds['_id'], { entryIds: es.map(e => e['_id']) })
+                this.db.updateFieldsById(ds['_id'], { entryIds: es.map(e => e['_id']) });
+                // TODO remove
+                this.db.fetchMany({ _datasetId: ds['_id'] }).then(imgs => {
+                    console.log(imgs);
+                });
             });
         });
     }

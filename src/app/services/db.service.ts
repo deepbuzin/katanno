@@ -44,9 +44,18 @@ export class DbService {
 
     public fetchManyByIds(ids: Array<string>): Promise<Array<any>> {
         return new Promise((resolve, reject) => {
-            this.db.find({ _id: { $in: [ids] }}, (err, doc) => {
+            this.db.find({ _id: { $in: [ids] }}, (err, docs) => {
                 if (err) reject(err);
-                resolve(doc);
+                resolve(docs);
+            });
+        });
+    }
+
+    public fetchMany(query: any): Promise<Array<any>> {
+        return new Promise((resolve, reject) => {
+            this.db.find(query, (err, docs) => {
+                if (err) reject(err);
+                resolve(docs);
             });
         });
     }

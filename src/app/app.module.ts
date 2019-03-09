@@ -11,6 +11,7 @@ import {HomeComponent} from './components/home/home.component';
 import {ViewerComponent} from './components/viewer/viewer.component';
 import {TableComponent} from './components/table/table.component';
 import {PreviewComponent} from './components/preview/preview.component';
+import { NoDataComponent } from './templates/no-data/no-data.component';
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent},
@@ -32,7 +33,8 @@ const routes: Routes = [
         HomeComponent,
         ViewerComponent,
         TableComponent,
-        PreviewComponent
+        PreviewComponent,
+        NoDataComponent
     ],
     imports: [
         BrowserModule,

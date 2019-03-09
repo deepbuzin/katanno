@@ -1,3 +1,8 @@
-<p>
-  preview works!
-</p>
+<div class="container-fluid">
+    <div class="row">
+        <div *ngFor="let entry of entries" class="col-xs-12 col-md-4 col-lg-3">
+            <img [src]="sanitize(activeDataSet.path + '\\' + entry._filename)" class="img-thumbnail img-fluid">
+            <!-- Fix that '\\' shit-->
+        </div>
+    </div>
+</div>

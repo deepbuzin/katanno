@@ -17,6 +17,7 @@ export class ViewerComponent implements OnInit {
     public datasets: Array<Dataset>;
     public entries: Array<Entry>;
     private noEntries = false;
+    private activeDSid: string;
 
     constructor() {
         this.fs = FsService.instance;
@@ -48,21 +49,19 @@ export class ViewerComponent implements OnInit {
 
             this.db.insertMany(entries).then(es => {
                 this.db.updateFieldsById(ds['_id'], { entryIds: es.map(e => e['_id']) });
-                // TODO remove
-                this.db.fetchMany({ _datasetId: ds['_id'] }).then(imgs => {
-                    console.log(imgs);
-                });
             });
         });
+
+        this.fetchDatasets();
     }
 
     async fetchDatasets(): Promise<void> {
-        const datasets = this.db.fetchAllByType('Dataset');
-        this.datasets = await datasets;
+        const datasets = await this.db.fetchAllByType('Dataset');
+        this.datasets = datasets;
         this.noEntries = !this.datasets;
     }
 
-    logActiveDS (event) {
-        console.warn('received dataset id', event);
+    previewDS (event) {
+        this.activeDSid = event;
     }
 }

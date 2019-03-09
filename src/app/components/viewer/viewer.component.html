@@ -1,19 +1,23 @@
 <div class="container-fluid">
-    <div class="row">
+    <div class="row py-2">
         <div class="col-12">
             <button type="button" class="btn btn-info" (click)="onClickNew()">New</button>
+            <button type="button" class="btn btn-info" (click)="logDS()">Log</button>
         </div>
     </div>
     <div class="row viewer-container">
         <div class="col-md-3">
             <app-table
-                *ngIf="!noEntries"
+                *ngIf="!noEntries; else noData"
                 [entries]="datasets"
-                (activeDatasetId)="logActiveDS($event)">
+                (activeDatasetId)="previewDS($event)">
             </app-table>
+            <ng-template #noData>
+                <app-no-data></app-no-data>
+            </ng-template>
         </div>
         <div class="col-md-9">
-            <app-preview></app-preview>
+            <app-preview [dataSetId]="activeDSid"></app-preview>
         </div>
     </div>
 </div>

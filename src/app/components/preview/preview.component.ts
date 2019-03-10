@@ -31,7 +31,7 @@ export class PreviewComponent implements OnInit, OnChanges {
   }
 
   getDSById(id) {
-      this.db.fetchOneById(id).then(data => {
+      this.db.fetchOne({ _id: id }).then(data => {
           this.activeDataSet = data;
           this.db.fetchMany({ _datasetId: data._id }).then(imgs => {
               this.entries = imgs;

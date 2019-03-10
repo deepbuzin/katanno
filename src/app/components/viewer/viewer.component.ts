@@ -39,7 +39,6 @@ export class ViewerComponent implements OnInit {
             description: 'sample',
             entryIds: [],
         }).serialize()).then(ds => {
-            this.datasets.push(new Dataset().deserialize(ds));
             const entries = this.fs.listDir(dir).map(filename => Entry.create({
                 filename: filename,
                 annotations: [],
@@ -48,7 +47,7 @@ export class ViewerComponent implements OnInit {
             }));
 
             this.db.insertMany(entries).then(es => {
-                this.db.updateFieldsById(ds['_id'], { entryIds: es.map(e => e['_id']) });
+                this.db.updateOne({_id: ds['_id']}, { $set: { entryIds: es.map(e => e['_id']) }});
             });
         });
 
@@ -56,7 +55,7 @@ export class ViewerComponent implements OnInit {
     }
 
     async fetchDatasets(): Promise<void> {
-        const datasets = await this.db.fetchAllByType('Dataset');
+        const datasets = await this.db.fetchMany({type: 'Dataset'});
         this.datasets = datasets;
         this.noEntries = !this.datasets;
     }

@@ -33,20 +33,11 @@ export class DbService {
         });
     }
 
-    public fetchOneById(id: string): Promise<any> {
+    public fetchOne(query: any): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.db.find({ _id: id }, (err, doc) => {
+            this.db.find(query, (err, doc) => {
                 if (err) reject(err);
                 resolve(doc[0]);
-            });
-        });
-    }
-
-    public fetchManyByIds(ids: Array<string>): Promise<Array<any>> {
-        return new Promise((resolve, reject) => {
-            this.db.find({ _id: { $in: [ids] }}, (err, docs) => {
-                if (err) reject(err);
-                resolve(docs);
             });
         });
     }
@@ -60,18 +51,18 @@ export class DbService {
         });
     }
 
-    public fetchAllByType(type: string): Promise<Array<any>> {
+    public updateOne(query: any, update: any): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.db.find({type: type}, (err, docs) => {
+            this.db.update(query, update, { returnUpdatedDocs: true, multi: false }, (err, numAffected, doc) => {
                 if (err) reject(err);
-                resolve(docs);
+                resolve(doc);
             });
         });
     }
 
-    public updateFieldsById(id: string, update: any): Promise<any> {
+    public updateMany(query: any, update: any): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.db.update({ _id: id }, { $set: update }, { returnUpdatedDocs: true, multi: false }, (err, numAffected, docs) => {
+            this.db.update(query, update, { returnUpdatedDocs: true, multi: true }, (err, numAffected, docs) => {
                 if (err) reject(err);
                 resolve(docs);
             });

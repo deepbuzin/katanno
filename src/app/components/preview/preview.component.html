@@ -1,8 +1,13 @@
-<div class="container-fluid">
+<div *ngIf="entries; else noData" class="container-fluid max-height-container">
     <div class="row">
         <div *ngFor="let entry of entries" class="col-xs-12 col-md-4 col-lg-3">
-            <img [src]="sanitize(activeDataSet.path + '\\' + entry._filename)" class="img-thumbnail img-fluid">
-            <!-- Fix that '\\' shit-->
+            <a class="nav-item nav-link active" [routerLink]="'/editor/' + entry._datasetId + '/' + entry._id" routerLinkActive="active">
+                <img [src]="sanitize(activeDataSet.path + '\\' + entry._filename)" class="img-thumbnail img-fluid">
+                <!-- Fix that '\\' shit-->
+            </a>
         </div>
     </div>
 </div>
+<ng-template #noData>
+    <app-no-data></app-no-data>
+</ng-template>

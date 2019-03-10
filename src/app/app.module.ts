@@ -15,7 +15,7 @@ import { NoDataComponent } from './templates/no-data/no-data.component';
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent},
-    {path: 'editor/:id', component: EditorComponent},
+    {path: 'editor/:dataset/:img', component: EditorComponent},
     {path: 'viewer', component: ViewerComponent},
     {
         path: '',

@@ -4,3 +4,15 @@
 .empty-bg {
     background-color: rgba(119, 136, 153, .30);
 }
+
+.max-height-container {
+    height: 90vh;
+    &--index {
+        height: 100vh;
+    }
+}
+
+.loading-placeholder {
+    width: 200px;
+    margin: auto;
+}

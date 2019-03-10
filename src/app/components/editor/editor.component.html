@@ -1,3 +1,14 @@
-<p>
-  editor works!
-</p>
+<div class="container-fluid max-height-container">
+    <div class="row py-2">
+        <div class="col-12">
+            <button class="btn btn-info" routerLink="/viewer" routerLinkActive="active">Back</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-lg-3">
+            <canvas id="canvas"></canvas>
+        </div>
+    </div>
+    {{ dataSetId }} {{ imgId }} {{ entries }}
+</div>
+

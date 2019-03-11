@@ -1,7 +1,7 @@
 <div *ngIf="entries; else noData" class="container-fluid max-height-container">
     <div class="row">
         <div *ngFor="let entry of entries" class="col-xs-12 col-md-4 col-lg-3">
-            <a class="nav-item nav-link active" [routerLink]="'/editor/' + entry._datasetId + '/' + entry._id" routerLinkActive="active">
+            <a class="nav-item nav-link active" [routerLink]="'/editor/' + entry.datasetId + '/' + entry.id" routerLinkActive="active">
                 <img [src]="sanitize(entry.url)" class="img-thumbnail img-fluid">
                 <!-- Fix that '\\' shit-->
             </a>

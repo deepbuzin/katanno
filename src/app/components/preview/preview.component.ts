@@ -1,8 +1,9 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import {FsService} from '../../services/fs.service';
-import {DbService} from '../../services/db.service';
-import {DomSanitizer} from '@angular/platform-browser';
-import {Entry} from '../../entities/entry';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Dataset } from '../../entities/dataset';
+import { Entry } from '../../entities/entry';
+import { DatasetRepo } from '../../repo/dataset.repo';
+import { EntryRepo } from '../../repo/entry.repo';
 
 @Component({
     selector: 'app-preview',
@@ -10,13 +11,13 @@ import {Entry} from '../../entities/entry';
     styleUrls: ['./preview.component.scss']
 })
 export class PreviewComponent implements OnInit, OnChanges {
-    private entries;
-    private activeDataSet;
+    private entries: Array<Entry>;
+    private activeDataset: Dataset;
 
     @Input()
     datasetId: string;
 
-    constructor(private sanitizer: DomSanitizer, private db: DbService, private fs: FsService) {
+    constructor(private sanitizer: DomSanitizer, private dsRepo: DatasetRepo, private entryRepo: EntryRepo) {
     }
 
     ngOnChanges(changes) {
@@ -26,11 +27,9 @@ export class PreviewComponent implements OnInit, OnChanges {
     }
 
     getDSById(id) {
-        this.db.fetchOne({_id: id}).then(data => {
-            this.activeDataSet = data;
-            this.db.fetchMany({ datasetId: data._id, type: 'Entry' }).then(imgs => {
-                this.entries = imgs.map(i => Entry.create(i));
-            });
+        this.dsRepo.fetchOneById(id).then(ds => {
+            this.activeDataset = ds;
+            this.entryRepo.fetchAllByDatasetId(ds.id).then(e => this.entries = e);
         });
     }
 

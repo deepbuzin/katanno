@@ -14,7 +14,9 @@ import { PreviewComponent } from './components/preview/preview.component';
 import { NoDataComponent } from './templates/no-data/no-data.component';
 
 import { DbService } from './services/db.service';
-import {FsService} from './services/fs.service';
+import { FsService } from './services/fs.service';
+import { DatasetRepo } from './repo/dataset.repo';
+import {EntryRepo} from './repo/entry.repo';
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent},
@@ -47,7 +49,9 @@ const routes: Routes = [
     ],
     providers: [
         FsService,
-        DbService
+        DbService,
+        DatasetRepo,
+        EntryRepo
     ],
     bootstrap: [AppComponent]
 })

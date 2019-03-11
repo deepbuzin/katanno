@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FsService } from '../../services/fs.service';
-import { DbService } from '../../services/db.service';
 import { Dataset } from '../../entities/dataset';
 
 @Component({
@@ -18,7 +17,7 @@ export class TableComponent implements OnInit {
     }
     @Output() activeDatasetId = new EventEmitter<string>();
 
-    constructor(private db: DbService, private fs: FsService) {
+    constructor(private fs: FsService) {
     }
 
     chooseDataset(activeDataset) {

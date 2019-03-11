@@ -1,9 +1,10 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {FsService} from '../../services/fs.service';
-import {DbService} from '../../services/db.service';
-import {Entry} from '../../entities/entry';
 import {DomSanitizer} from '@angular/platform-browser';
+import {Dataset} from '../../entities/dataset';
+import {Entry} from '../../entities/entry';
+import {DatasetRepo} from '../../repo/dataset.repo';
+import {EntryRepo} from '../../repo/entry.repo';
 
 @Component({
     selector: 'app-editor',
@@ -15,10 +16,10 @@ export class EditorComponent implements OnInit, OnChanges {
     private imgId: string;
     private img: Entry;
 
-    private activeDS: Array<any>;
+    private activeDs: Dataset;
     private entries: Array<Entry> = [];
 
-    constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private db: DbService, private fs: FsService) {
+    constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private dsRepo: DatasetRepo, private entryRepo: EntryRepo) {
     }
 
     ngOnInit() {
@@ -40,18 +41,12 @@ export class EditorComponent implements OnInit, OnChanges {
     }
 
     loadImg(id) {
-        this.db.fetchOne({ _id: id, type: 'Entry' }).then(img => {
-            this.img = Entry.create(img);
-        });
+        this.entryRepo.fetchOneById(id).then(img => this.img = img);
     }
 
     getActiveDS(id): void {
-        this.db.fetchOne({ _id: id }).then(response => {
-            this.activeDS = response;
-        });
-        this.db.fetchMany({_datasetId: id}).then(imgs => {
-            this.sortEntries(imgs);
-        });
+        this.dsRepo.fetchOneById(id).then(ds => this.activeDs = ds);
+        this.entryRepo.fetchAllByDatasetId(id).then(imgs => this.sortEntries(imgs));
     }
 
     sortEntries(imgs: Array<Entry>): void {

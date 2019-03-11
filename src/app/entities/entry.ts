@@ -4,6 +4,7 @@ import { Annotation } from './annotation';
 export class Entry implements DbEntity {
     private _id: string;
     private _filename: string;
+    private _url: string;
     private _annotations: Array<Annotation>;
     private _datasetName: string;
     private _datasetId: string;
@@ -25,6 +26,14 @@ export class Entry implements DbEntity {
 
     get filename(): string {
         return this._filename;
+    }
+
+    get url(): string {
+        return this._url;
+    }
+
+    set url(value: string) {
+        this._url = value;
     }
 
     set filename(value: string) {
@@ -58,6 +67,7 @@ export class Entry implements DbEntity {
     deserialize(object: any): Entry {
         this.id = object._id;
         this.filename = object.filename;
+        this.url = object.url;
         this.annotations = object.annotations.map(a => new Annotation().deserialize(a));
         this.datasetName = object.datasetName;
         this.datasetId = object.datasetId;
@@ -68,6 +78,7 @@ export class Entry implements DbEntity {
         const obj = {
             type: 'Entry',
             filename: this.filename,
+            url: this.url,
             annotations: this.annotations.map(a => a.serialize()),
             datasetName: this.datasetName,
             datasetId: this.datasetId

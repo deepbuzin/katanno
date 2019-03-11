@@ -6,9 +6,12 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-lg-3">
-            <canvas id="canvas"></canvas>
+            <img *ngIf="img; else noData" [src]="sanitize(img.url)" class="img-fluid">
         </div>
     </div>
-    {{ dataSetId }} {{ imgId }} {{ entries }}
+    {{ datasetId }} {{ imgId }} {{ entries }}
 </div>
+<ng-template #noData>
+    <app-no-data></app-no-data>
+</ng-template>
 

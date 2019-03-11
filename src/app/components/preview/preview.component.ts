@@ -1,12 +1,13 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import { FsService } from '../../services/fs.service';
-import { DbService } from '../../services/db.service';
+import {FsService} from '../../services/fs.service';
+import {DbService} from '../../services/db.service';
 import {DomSanitizer} from '@angular/platform-browser';
+import {Entry} from '../../entities/entry';
 
 @Component({
-  selector: 'app-preview',
-  templateUrl: './preview.component.html',
-  styleUrls: ['./preview.component.scss']
+    selector: 'app-preview',
+    templateUrl: './preview.component.html',
+    styleUrls: ['./preview.component.scss']
 })
 export class PreviewComponent implements OnInit, OnChanges {
     private fs: FsService;
@@ -17,33 +18,33 @@ export class PreviewComponent implements OnInit, OnChanges {
     private activeDataSet;
 
     @Input()
-    dataSetId: string;
+    datasetId: string;
 
-  constructor(private sanitizer: DomSanitizer) {
-      this.fs = FsService.instance;
-      this.db = DbService.instance;
-  }
+    constructor(private sanitizer: DomSanitizer) {
+        this.fs = FsService.instance;
+        this.db = DbService.instance;
+    }
 
-  ngOnChanges(changes) {
-      if (changes.dataSetId.currentValue) {
-          this.getDSById(changes.dataSetId.currentValue);
-      }
-  }
+    ngOnChanges(changes) {
+        if (changes.datasetId.currentValue) {
+            this.getDSById(changes.datasetId.currentValue);
+        }
+    }
 
-  getDSById(id) {
-      this.db.fetchOne({ _id: id }).then(data => {
-          this.activeDataSet = data;
-          this.db.fetchMany({ _datasetId: data._id }).then(imgs => {
-              this.entries = imgs;
-          });
-      });
-  }
+    getDSById(id) {
+        this.db.fetchOne({_id: id}).then(data => {
+            this.activeDataSet = data;
+            this.db.fetchMany({ datasetId: data._id, type: 'Entry' }).then(imgs => {
+                this.entries = imgs.map(i => Entry.create(i));
+            });
+        });
+    }
 
-  sanitize(url: string) {
-      return this.sanitizer.bypassSecurityTrustUrl(url);
-  }
+    sanitize(url: string) {
+        return this.sanitizer.bypassSecurityTrustUrl(url);
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
 }

@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {FsService} from '../../services/fs.service';
 import {DbService} from '../../services/db.service';
 import {Entry} from '../../entities/entry';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-editor',
@@ -13,22 +14,24 @@ export class EditorComponent implements OnInit, OnChanges {
     private fs: FsService;
     private db: DbService;
 
-    private dataSetId: string;
+    private datasetId: string;
     private imgId: string;
+    private img: Entry;
 
     private activeDS: Array<any>;
     private entries: Array<Entry> = [];
 
-    constructor(private route: ActivatedRoute) {
+    constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer) {
         this.fs = FsService.instance;
         this.db = DbService.instance;
     }
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-                this.dataSetId = params['dataset'];
+                this.datasetId = params['dataset'];
                 this.imgId = params['img'];
-                this.getActiveDS(this.dataSetId);
+                this.loadImg(this.imgId);
+                this.getActiveDS(this.datasetId);
             }, error => {
                 console.error(error);
             }
@@ -36,12 +39,18 @@ export class EditorComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.dataSetId.currentValue) {
-            this.getActiveDS(changes.dataSetId.currentValue);
+        if (changes.datasetId.currentValue) {
+            this.getActiveDS(changes.datasetId.currentValue);
         }
     }
 
-    getActiveDS(id) {
+    loadImg(id) {
+        this.db.fetchOne({ _id: id, type: 'Entry' }).then(img => {
+            this.img = Entry.create(img);
+        });
+    }
+
+    getActiveDS(id): void {
         this.db.fetchOne({ _id: id }).then(response => {
             this.activeDS = response;
         });
@@ -50,10 +59,14 @@ export class EditorComponent implements OnInit, OnChanges {
         });
     }
 
-    sortEntries(imgs: Array<Entry>) {
+    sortEntries(imgs: Array<Entry>): void {
         this.entries.push(imgs.find((e, i, a) => {
                 return e.id === this.imgId;
             })
         );
+    }
+
+    sanitize(url: string) {
+        return this.sanitizer.bypassSecurityTrustUrl(url);
     }
 }

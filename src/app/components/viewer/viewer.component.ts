@@ -41,10 +41,11 @@ export class ViewerComponent implements OnInit {
         }).serialize()).then(ds => {
             const entries = this.fs.listDir(dir).map(filename => Entry.create({
                 filename: filename,
+                url: path.join(dir, filename),
                 annotations: [],
                 datasetName: datasetName,
                 datasetId: ds['_id']
-            }));
+            }).serialize());
 
             this.db.insertMany(entries).then(es => {
                 this.db.updateOne({_id: ds['_id']}, { $set: { entryIds: es.map(e => e['_id']) }});

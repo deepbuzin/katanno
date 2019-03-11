@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { join } from 'path';
+
 const Datastore = require('nedb');
 
 @Injectable()
+
 export class DbService {
     private db;
     private static _instance: DbService;
 
-    private constructor() {
+    public constructor() {
         this.db = new Datastore({filename: join(process.cwd(), 'datasets'), autoload: true});
     }
 

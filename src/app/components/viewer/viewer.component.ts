@@ -9,19 +9,15 @@ const path = require('path');
 @Component({
     selector: 'app-viewer',
     templateUrl: './viewer.component.html',
-    styleUrls: ['./viewer.component.scss']
+    styleUrls: ['./viewer.component.scss'],
 })
 export class ViewerComponent implements OnInit {
-    private fs: FsService;
-    private db: DbService;
     public datasets: Array<Dataset>;
     public entries: Array<Entry>;
     private noEntries = false;
     private activeDSid: string;
 
-    constructor() {
-        this.fs = FsService.instance;
-        this.db = DbService.instance;
+    constructor(private db: DbService, private fs: FsService) {
         this.datasets = [];
     }
 

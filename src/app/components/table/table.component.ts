@@ -9,8 +9,6 @@ import { Dataset } from '../../entities/dataset';
     styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit {
-    private fs: FsService;
-    private db: DbService;
     private _entries: Array<Dataset>;
     private activeSet: string;
 
@@ -20,9 +18,7 @@ export class TableComponent implements OnInit {
     }
     @Output() activeDatasetId = new EventEmitter<string>();
 
-    constructor() {
-        this.fs = FsService.instance;
-        this.db = DbService.instance;
+    constructor(private db: DbService, private fs: FsService) {
     }
 
     chooseDataset(activeDataset) {

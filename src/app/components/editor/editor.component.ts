@@ -11,9 +11,6 @@ import {DomSanitizer} from '@angular/platform-browser';
     styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit, OnChanges {
-    private fs: FsService;
-    private db: DbService;
-
     private datasetId: string;
     private imgId: string;
     private img: Entry;
@@ -21,9 +18,7 @@ export class EditorComponent implements OnInit, OnChanges {
     private activeDS: Array<any>;
     private entries: Array<Entry> = [];
 
-    constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer) {
-        this.fs = FsService.instance;
-        this.db = DbService.instance;
+    constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private db: DbService, private fs: FsService) {
     }
 
     ngOnInit() {

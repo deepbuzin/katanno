@@ -10,19 +10,13 @@ import {Entry} from '../../entities/entry';
     styleUrls: ['./preview.component.scss']
 })
 export class PreviewComponent implements OnInit, OnChanges {
-    private fs: FsService;
-    private db: DbService;
-
-
     private entries;
     private activeDataSet;
 
     @Input()
     datasetId: string;
 
-    constructor(private sanitizer: DomSanitizer) {
-        this.fs = FsService.instance;
-        this.db = DbService.instance;
+    constructor(private sanitizer: DomSanitizer, private db: DbService, private fs: FsService) {
     }
 
     ngOnChanges(changes) {

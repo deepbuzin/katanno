@@ -1,6 +1,6 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {DomSanitizer} from '@angular/platform-browser';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Dataset} from '../../entities/dataset';
 import {Entry} from '../../entities/entry';
 import {DatasetRepo} from '../../repo/dataset.repo';
@@ -18,6 +18,8 @@ export class EditorComponent implements OnInit, OnChanges {
 
     private activeDs: Dataset;
     private entries: Array<Entry> = [];
+
+    private svg: SafeHtml;
 
     constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private dsRepo: DatasetRepo, private entryRepo: EntryRepo) {
     }
@@ -41,7 +43,10 @@ export class EditorComponent implements OnInit, OnChanges {
     }
 
     loadImg(id) {
-        this.entryRepo.fetchOneById(id).then(img => this.img = img);
+        this.entryRepo.fetchOneById(id).then(img => {
+            this.img = img;
+            this.svg = this.sanitizer.bypassSecurityTrustHtml("<image xlink:href=" + img.url + " />");
+        });
     }
 
     getActiveDS(id): void {

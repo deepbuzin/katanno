@@ -6,7 +6,11 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-lg-3">
-            <img *ngIf="img; else noData" [src]="sanitize(img.url)" class="img-fluid">
+            <svg:svg viewBox="0 0 500 250">
+                <svg:g *ngIf="img">
+                    <svg:g [innerHTML]="svg"></svg:g>
+                </svg:g>
+            </svg:svg>
         </div>
     </div>
     {{ datasetId }} {{ imgId }} {{ entries }}

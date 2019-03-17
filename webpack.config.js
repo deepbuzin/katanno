@@ -7,9 +7,8 @@ const autoprefixer = require('autoprefixer');
 const postcssUrl = require('postcss-url');
 
 const { NoEmitOnErrorsPlugin, LoaderOptionsPlugin } = require('webpack');
-const { GlobCopyWebpackPlugin, BaseHrefWebpackPlugin } = require('@angular/cli/plugins/webpack');
-const { CommonsChunkPlugin } = require('webpack').optimize;
-const { AotPlugin } = require('@ngtools/webpack');
+const { SplitChunksPlugin} = require('webpack').optimize;
+const { AngularCompilerPlugin } = require('@ngtools/webpack');
 
 const nodeModules = path.join(process.cwd(), 'node_modules');
 const entryPoints = ["inline","polyfills","sw-register","styles","vendor","main"];
@@ -192,25 +191,13 @@ module.exports = {
   },
   "plugins": [
     new NoEmitOnErrorsPlugin(),
-    new GlobCopyWebpackPlugin({
-      "patterns": [
-        "assets",
-        "favicon.ico"
-      ],
-      "globOptions": {
-        "cwd": path.join(process.cwd(), "src"),
-        "dot": true,
-        "ignore": "**/.gitkeep"
-      }
-    }),
     new CopyWebpackPlugin([{
       context: path.resolve(__dirname, "src"),
       from: "entry.js"
     }]),
     new ProgressPlugin(),
     new HtmlWebpackPlugin({
-      "template": "./src/index.html",
-      "filename": "./index.html",
+    "template": path.resolve(__dirname, 'src', 'index.html'),
       "hash": false,
       "inject": true,
       "compile": true,
@@ -236,17 +223,12 @@ module.exports = {
         }
     }
     }),
-    new BaseHrefWebpackPlugin({}),
-    new CommonsChunkPlugin({
+    new SplitChunksPlugin({
       "name": "inline",
-      "minChunks": null
-    }),
-    new CommonsChunkPlugin({
-      "name": "vendor",
-      "minChunks": (module) => module.resource && module.resource.startsWith(nodeModules),
-      "chunks": [
-        "main"
-      ]
+        "minChunks": (module) => module.resource && module.resource.startsWith(nodeModules),
+        "chunks": [
+            "main"
+        ]
     }),
     new ExtractTextPlugin({
       "filename": "[name].bundle.css",
@@ -288,7 +270,7 @@ module.exports = {
         "context": ""
       }
     }),
-    new AotPlugin({
+    new AngularCompilerPlugin({
       "mainPath": "main.ts",
       "hostReplacementPaths": {
         "environments/environment.ts": "environments/environment.ts"

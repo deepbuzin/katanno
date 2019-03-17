@@ -5,6 +5,7 @@ import {Dataset} from '../../entities/dataset';
 import {Entry} from '../../entities/entry';
 import {DatasetRepo} from '../../repo/dataset.repo';
 import {EntryRepo} from '../../repo/entry.repo';
+import * as SVG from 'svg.js';
 
 @Component({
     selector: 'app-editor',
@@ -34,6 +35,11 @@ export class EditorComponent implements OnInit, OnChanges {
                 console.error(error);
             }
         );
+
+        const svg = SVG('svg-div').size(300, 300);
+        console.log(svg);
+        const rect = svg.rect(100, 100).attr({ fill: '#f06' });
+        console.log(rect);
     }
 
     ngOnChanges(changes: SimpleChanges): void {

@@ -28,7 +28,6 @@
         "@angular/platform-browser": "^7.2.9",
         "@angular/platform-browser-dynamic": "^7.2.9",
         "@angular/router": "^7.2.9",
-        "@svgdotjs/svg.panzoom.js": "^2.0.2",
         "bootstrap": "^4.3.1",
         "core-js": "^2.4.1",
         "nedb": "^1.8.0",
@@ -36,7 +35,9 @@
         "rxjs": "^6.4.0",
         "rxjs-compat": "^6.0.0-rc.0",
         "rxjs-observable-store": "^1.0.1",
+        "svg.draw.js": "^2.0.3",
         "svg.js": "^2.7.1",
+        "svg.panzoom.js": "^1.2.3",
         "zone.js": "^0.8.4"
     },
     "devDependencies": {

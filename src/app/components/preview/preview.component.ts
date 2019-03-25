@@ -29,12 +29,12 @@ export class PreviewComponent implements OnInit, OnChanges {
     getDSById(id) {
         this.dsRepo.fetchOneById(id).then(ds => {
             this.activeDataset = ds;
-            this.entryRepo.fetchAllByDatasetId(ds.id).then(e => this.entries = e);
+            this.entryRepo.fetchAllByDatasetId(ds.id).then(e => this.entries = e );
         });
     }
 
     sanitize(url: string) {
-        return this.sanitizer.bypassSecurityTrustUrl(url);
+        return this.sanitizer.bypassSecurityTrustUrl('file://' + url);
     }
 
     ngOnInit() {

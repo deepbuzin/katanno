@@ -3,12 +3,14 @@
     <head>
       <meta charset="UTF-8">
     </head>
-    <body>
-        <img src="assets/splash-gif.gif" width="50%" height="auto" class="gif">
-        <div class="info">Dunkin your chick's guts, please stand by...</div>
+    <body id="body">
+        <img id="splashgif" src="assets/splash-gif.gif" width="50%" height="auto" class="gif">
+        <div id="info" class="info">Establishing connection, please stand by...</div>
+        <div id="overscreen"></div>
     </body>
 
     <style>
+
         .info {
             width: 100%;
             text-align: center;
@@ -16,8 +18,26 @@
             margin-top: 50px;
         }
 
+        #overscreen {
+            width: 100%;
+            height: 100%;
+            opacity: 100%;
+            z-index: 1000;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
         .gif {
-            margin: 20px 25% auto 25%
+            margin: 20px 25% auto 25%;
+        }
+
+        html, html * {
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            user-select: none;
         }
     </style>
 

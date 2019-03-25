@@ -14,7 +14,9 @@ function createWindow() {
         width: 600,
         height: 400,
         alwaysOnTop: true,
-    })
+    });
+
+    loader.setResizable(false);
 
     loader.loadURL(`file://${__dirname}/splash.html`);
 

@@ -8,7 +8,8 @@ import {EntryRepo} from '../../repo/entry.repo';
 
 declare const SVG: any;
 import 'svg.js';
-import 'svg.panzoom.js'
+// import 'svg.panzoom.js'
+import '../../utils/customized.panzoom'
 import 'svg.draw.js'
 
 @Component({
@@ -32,6 +33,7 @@ export class EditorComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
+        this.svg = SVG('svg-div').size(300, 300);
         this.kps = new Array<any>();
         this.route.params.subscribe(params => {
                 this.datasetId = params['dataset'];
@@ -53,11 +55,11 @@ export class EditorComponent implements OnInit, OnChanges {
     loadImg(id) {
         this.entryRepo.fetchOneById(id).then(img => {
             this.imgEntry = img;
-            this.svg = SVG('svg-div').size(300, 300);
             this.img = this.svg.image('file://' + this.imgEntry.url, 300, 300);
-            // this.svg.panZoom({});
+            this.svg.panZoom({});
             // this.drawKeypoints();
-            this.drawBbox();
+            // this.drawBbox();
+            this.drawMask();
         });
     }
 
@@ -75,14 +77,14 @@ export class EditorComponent implements OnInit, OnChanges {
     }
 
     drawBbox() {
-        const targetHor = this.svg.line(0, 20, 300, 20).stroke({width: 2});
-        const targetVert = this.svg.line(0, 0, 0, 300).stroke({width: 2});
+        // const targetHor = this.svg.line(0, 20, 300, 20).stroke({width: 2});
+        // const targetVert = this.svg.line(0, 0, 0, 300).stroke({width: 2});
         const target = this.svg.circle(10).fill('#ff00ff');
         this.img.mousemove(e => {
             const {x, y} = this.img.point(e.pageX, e.pageY);
             target.center(x, y);
-            targetVert.x(x);
-            targetHor.y(y);
+            // targetVert.x(x);
+            // targetHor.y(y);
 
         });
 
@@ -99,6 +101,35 @@ export class EditorComponent implements OnInit, OnChanges {
             bbox.draw('stop', e);
         });
 
+    }
+
+    drawMask() {
+        const mask = this.svg.polyline().attr({
+            'fill-opacity': 0.0,
+            'stroke': '#83fff3',
+            'stroke-width': 2
+        }).draw();
+
+        mask.on('drawstart', e => {
+            document.addEventListener('keydown', e => {
+                if(e.code == 'Space') {
+                    const points = mask.array();
+                    const maskPolygon = this.svg.polygon(points)
+                        .attr({
+                            'fill': '#00deff',
+                            'fill-opacity': 0.2,
+                            'stroke': '#83fff3',
+                            'stroke-width': 2
+                        });
+                    this.svg.off('keydown');
+                    mask.draw('cancel');
+                }
+                if(e.code == 'Escape') {
+                    this.svg.off('keydown');
+                    mask.draw('cancel');
+                }
+            });
+        });
     }
 
     getActiveDS(id): void {

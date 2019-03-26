@@ -1,6 +1,6 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {DomSanitizer, SafeHtml, SafeUrl} from '@angular/platform-browser';
 import {Dataset} from '../../entities/dataset';
 import {Entry} from '../../entities/entry';
 import {DatasetRepo} from '../../repo/dataset.repo';
@@ -8,7 +8,6 @@ import {EntryRepo} from '../../repo/entry.repo';
 
 declare const SVG: any;
 import 'svg.js';
-// import 'svg.panzoom.js'
 import '../../utils/customized.panzoom'
 import 'svg.draw.js'
 
@@ -52,18 +51,15 @@ export class EditorComponent implements OnInit, OnChanges {
         }
     }
 
-    loadImg(id) {
+    loadImg(id): void {
         this.entryRepo.fetchOneById(id).then(img => {
             this.imgEntry = img;
             this.img = this.svg.image('file://' + this.imgEntry.url, 300, 300);
             this.svg.panZoom({});
-            // this.drawKeypoints();
-            // this.drawBbox();
-            this.drawMask();
         });
     }
 
-    drawKeypoints() {
+    drawKeypoints(): void {
         const target = this.svg.circle(10).fill('#ff00ff');
         this.img.mousemove(e => {
             const {x, y} = this.img.point(e.pageX, e.pageY);
@@ -76,15 +72,11 @@ export class EditorComponent implements OnInit, OnChanges {
         });
     }
 
-    drawBbox() {
-        // const targetHor = this.svg.line(0, 20, 300, 20).stroke({width: 2});
-        // const targetVert = this.svg.line(0, 0, 0, 300).stroke({width: 2});
+    drawBbox(): void {
         const target = this.svg.circle(10).fill('#ff00ff');
         this.img.mousemove(e => {
             const {x, y} = this.img.point(e.pageX, e.pageY);
             target.center(x, y);
-            // targetVert.x(x);
-            // targetHor.y(y);
 
         });
 
@@ -103,7 +95,7 @@ export class EditorComponent implements OnInit, OnChanges {
 
     }
 
-    drawMask() {
+    drawMask(): void {
         const mask = this.svg.polyline().attr({
             'fill-opacity': 0.0,
             'stroke': '#83fff3',
@@ -144,7 +136,7 @@ export class EditorComponent implements OnInit, OnChanges {
         );
     }
 
-    sanitize(url: string) {
+    sanitize(url: string): SafeUrl {
         return this.sanitizer.bypassSecurityTrustUrl(url);
     }
 }

@@ -35,6 +35,7 @@ export class ViewerComponent implements OnInit {
             path: dir,
             description: 'sample',
             entryIds: [],
+            cats: []
         })).then(ds => {
             const entries = this.fs.listDir(dir).map(filename => Entry.create({
                 filename: filename,

@@ -13,8 +13,15 @@
                 <!--</svg:g>-->
             <!--</svg:svg>-->
         </div>
+        {{ datasetId }} {{ imgId }} {{ entries }}
     </div>
-    {{ datasetId }} {{ imgId }} {{ entries }}
+    <div class="row">
+        <div class="col-12">
+            <button class="button btn-primary" (click)="drawKeypoints()">Keypoints</button>
+            <button class="button btn-primary" (click)="drawBbox()">Bbox</button>
+            <button class="button btn-primary" (click)="drawMask()">Mask</button>
+        </div>
+    </div>
 </div>
 <ng-template #noData>
     <app-no-data></app-no-data>

@@ -68,7 +68,7 @@ export class Entry implements DbEntity {
         this.id = object._id;
         this.filename = object.filename;
         this.url = object.url;
-        this.annotations = object.annotations.map(a => new Annotation().deserialize(a));
+        this.annotations = object.annotations.map(a => Annotation.create(a));
         this.datasetName = object.datasetName;
         this.datasetId = object.datasetId;
         return this;

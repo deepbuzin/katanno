@@ -70,4 +70,8 @@ export class DbService {
             });
         });
     }
+
+    public dropDb() {
+        this.db.remove({ }, { multi: true }, (err, numRemoved) => this.db.loadDatabase((err) => {}));
+    }
 }

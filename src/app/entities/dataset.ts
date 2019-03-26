@@ -1,4 +1,5 @@
 import {DbEntity} from './db.entity';
+import {Cat} from './cat';
 
 export class Dataset implements DbEntity {
     private _id: string;
@@ -6,6 +7,7 @@ export class Dataset implements DbEntity {
     private _path: string;
     private _description: string;
     private _entryIds: Array<string>;
+    private _cats: Array<Cat>;
 
     constructor() {
     }
@@ -54,12 +56,21 @@ export class Dataset implements DbEntity {
         this._entryIds = value;
     }
 
+    get cats(): Array<Cat> {
+        return this._cats;
+    }
+
+    set cats(value: Array<Cat>) {
+        this._cats = value;
+    }
+
     deserialize(object: any): Dataset {
         this.id = object._id;
         this.name = object.name;
         this.path = object.path;
         this.description = object.description;
         this.entryIds = object.entryIds;
+        this.cats = object.cats.map(c => Cat.create(c));
         return this;
     }
 
@@ -69,7 +80,8 @@ export class Dataset implements DbEntity {
             name: this.name,
             path: this.path,
             description: this.description,
-            entryIds: this.entryIds
+            entryIds: this.entryIds,
+            cats: this.cats.map(c => c.serialize())
         };
         if (this.id) obj['_id'] = this.id;
         return obj;

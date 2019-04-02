@@ -9,7 +9,7 @@ import {EntryRepo} from '../../repo/entry.repo';
 declare const SVG: any;
 import 'svg.js';
 import '../../utils/customized.panzoom'
-import 'svg.draw.js'
+import '../../utils/customized.draw'
 
 @Component({
     selector: 'app-editor',

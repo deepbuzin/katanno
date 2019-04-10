@@ -1,17 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DbService} from '../../services/db.service';
+import {Dataset} from '../../entities/dataset';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private db: DbService) { }
+    private activeDataset: Dataset;
+    private noEntries = false;
+    private datasets = [
+        {
+            _id: 'kek',
+            name: 'I eat ass'
+        },
+        {
+            _id: 'ahahhah',
+            name: 'I love kpop'
+        },
+        {
+            _id: 'oh_hi_mark',
+            name: 'I`m in serious trouble please help me'
+        },
+        {
+            _id: 'goodbyenow',
+            name: 'Thats`s not funny anymore'
+        }
+    ];
 
-  ngOnInit() {
-      // this.db.dropDb();
-  }
+    constructor(private db: DbService) {
+    }
+
+    logDS(ds) {
+        this.activeDataset = ds;
+        console.log(this.activeDataset);
+    }
+
+    ngOnInit() {
+        // this.db.dropDb();
+    }
 
 }

@@ -1,12 +1,18 @@
-<p>
-  home works!
-</p>
 <div class="row">
-  <div class="col-3" style="background-color: hotpink">
-    GET
+  <div class="col-3">
+      <h4 class="text-center">Your recent datasets</h4>
+      <app-table
+          *ngIf="!noEntries; else noData"
+          [entries]="datasets"
+          (activeDatasetId)="logDS($event)">
+      >
+      </app-table>
+      <ng-template #noData>
+          <app-no-data></app-no-data>
+      </ng-template>
   </div>
 
   <div class="col-9" style="background-color: aqua">
-    IT
+    {{ this.activeDataset }}
   </div>
 </div>
